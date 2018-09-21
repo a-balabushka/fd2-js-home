@@ -5,7 +5,7 @@ function deleteClass(styleCss, cls) {
   for (var i = 0; i < styleClass.length; i++) {
     if (styleClass[i] === cls) {
       styleClass.splice(i, 1);
-      /* можно написать splice(i, 2), тогда удалит 2 элемента menu. Но так не подойдет...*/
+      i--;
     }
   }
   styleCss.className = styleClass.join(' ');
@@ -14,7 +14,7 @@ function deleteClass(styleCss, cls) {
 var styleCss = {
   className: 'open menu menu'
 };
+
 deleteClass(styleCss, 'menu');
 deleteClass(styleCss, 'noClass');
 console.log(styleCss.className);
-

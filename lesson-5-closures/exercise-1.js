@@ -1,16 +1,30 @@
 'use strict';
 
-var lattice = '';
+function roundingOff(n) {
+  return Math.floor(parseInt(n, 0));
+}
+
+function drawConsole(row, column, symbOne, symbTwo) {
+  symbOne = symbOne || '#';
+  symbTwo = symbTwo || '\\';
+  var userString = '';
+  for (var i = 0; i < column; i++) {
+    for (var j = 0; j < row; j++) {
+      j % 2 === i % 2 ? userString += symbOne : userString += symbTwo;
+    }
+    userString += '\n';
+  }
+  console.log(userString);
+}
+
 do {
   var rowS = prompt('Please, enter number of rows:', '8');
-  var row = Math.floor(parseInt(rowS, 0));
   var columnS = prompt('Please, enter number of columns:', '8');
-  var column = Math.floor(parseInt(columnS, 0));
+  var row = roundingOff(rowS);
+  var column = roundingOff(columnS);
 } while (isNaN(row) || isNaN(column));
-for (var i = 0; i < column; i++) {
-  for (var j = 0; j < row; j++) {
-    j % 2 === i % 2 ? lattice += '#' : lattice += '\\';
-  }
-  lattice += '\n';
-}
-console.log(lattice);
+
+drawConsole(row, column, '#', ' ');
+drawConsole(row, column, '$');
+drawConsole(row, column);
+
