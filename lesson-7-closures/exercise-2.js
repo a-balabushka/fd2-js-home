@@ -3,15 +3,15 @@
 function interviewQuestion(firstName) {
   return function (profession) {
     if (profession === 'designer') {
-      console.log(firstName + ' can you please explain what UX design is?');
+      return (firstName + ' can you please explain what UX design is?');
     } else if (profession === 'teacher') {
-      console.log('What subject do you teach ' + firstName + '?');
+      return ('What subject do you teach ' + firstName + '?');
     } else if (profession === 'other') {
-      console.log('Hello ' + firstName + ' what do you do?');
+      return ('Hello ' + firstName + ' what do you do?');
     }
-    return profession;
   };
 }
+
 /* var firstName = prompt('Enter your name, please: ', 'Artur');
 var profession = prompt('Enter your profession, please: ', 'teacher');
 
