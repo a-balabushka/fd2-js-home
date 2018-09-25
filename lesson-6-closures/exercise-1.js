@@ -1,12 +1,17 @@
 'use strict';
 
-function fixedNum(n) {
+function roundingOff(n) {
   return n.toFixed(2);
 }
 
-function tipAverage(r, v) {
-  return r + +v;
+function calculateAverage(tips) {
+  var sum = 0;
+  for (var i = 0; i < tips.length; i++) {
+    sum = sum + +tips[i];
+  }
+  return sum / tips.length;
 }
+
 var john = {
   bills: [124, 48, 268, 180, 42],
   tips: [],
@@ -15,11 +20,11 @@ var john = {
   calculateTips: function () {
     for (var i = 0; i < john.bills.length; i++) {
       if (john.bills[i] < 50) {
-        john.tips[i] = fixedNum(john.bills[i] * 0.2);
+        john.tips[i] = roundingOff(john.bills[i] * 0.2);
       } else if (john.bills[i] >= 50 && john.bills[i] < 200) {
-        john.tips[i] = fixedNum(john.bills[i] * 0.15);
+        john.tips[i] = roundingOff(john.bills[i] * 0.15);
       } else {
-        john.tips[i] = fixedNum(john.bills[i] * 0.1);
+        john.tips[i] = roundingOff(john.bills[i] * 0.1);
       }
       john.billsAndTips[i] = john.bills[i] + +john.tips[i];
     }
@@ -38,11 +43,11 @@ var mark = {
   calculateTips: function () {
     for (var i = 0; i < mark.bills.length; i++) {
       if (mark.bills[i] < 100) {
-        mark.tips[i] = fixedNum(mark.bills[i] * 0.2);
+        mark.tips[i] = roundingOff(mark.bills[i] * 0.2);
       } else if (mark.bills[i] >= 100 && mark.bills[i] < 300) {
-        mark.tips[i] = fixedNum(mark.bills[i] * 0.1);
+        mark.tips[i] = roundingOff(mark.bills[i] * 0.1);
       } else {
-        mark.tips[i] = fixedNum(mark.bills[i] * 0.25);
+        mark.tips[i] = roundingOff(mark.bills[i] * 0.25);
       }
       mark.billsAndTips[i] = mark.bills[i] + +mark.tips[i];
     }
@@ -53,8 +58,8 @@ console.log('Mark tips = ' + mark.tips);
 console.log('Mark bills + tips = ' + mark.billsAndTips);
 console.log('-----------------------------------------');
 
-john.averageTips = fixedNum(john.tips.reduce(tipAverage, 0) / john.tips.length);
-mark.averageTips = fixedNum(mark.tips.reduce(tipAverage, 0) / mark.tips.length);
+john.averageTips = roundingOff(calculateAverage(john.tips));
+mark.averageTips = roundingOff(calculateAverage(mark.tips));
 
 if (john.averageTips > mark.averageTips) {
   console.log('John\'s family paid the highest tips on average than Mark\'s family.' + '\n' + 'John average tips = ' + john.averageTips + ', Mark average tips = ' + mark.averageTips);
@@ -66,4 +71,4 @@ if (john.averageTips > mark.averageTips) {
 
 module.exports.john = john;
 module.exports.mark = mark;
-module.exports.tipAverage = tipAverage;
+module.exports.tipAverage = calculateAverage;
