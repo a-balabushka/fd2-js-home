@@ -15,13 +15,21 @@
     }
   };
 
-  Question.prototype.checkAnswer = function (ans) {
+  Question.prototype.checkAnswer = function (ans, callback) {
+    var sc;
+
     if (parseInt(ans, 0) === this.correct) {
-      score++;
       console.log('Correct answer!');
+      sc = callback(true);
     } else {
       console.log('Wrong answer. Try again :)');
+      sc = callback(false);
     }
+    this.displayScore(sc);
+  };
+
+  Question.prototype.displayScore = function (score) {
+    console.log('Your current score is: ' + score);
   };
 
   var q1 = new Question('Is JavaScript the coolest programming language in the world?',
@@ -37,7 +45,18 @@
     2);
 
   var questions = [q1, q2, q3];
-  var score = +0;
+
+  function score() {
+    var sc = 0;
+    return function (correct) {
+      if (correct) {
+        sc++;
+      }
+      return sc;
+    };
+  }
+
+  var keepScore = score();
 
   function nextRandomQuestion() {
     var n = Math.floor(Math.random() * questions.length);
@@ -46,12 +65,8 @@
     var answer = prompt('Please select the correct answer.');
 
     if (answer !== 'exit') {
-      questions[n].checkAnswer(answer);
+      questions[n].checkAnswer(answer, keepScore);
       nextRandomQuestion();
-    } else {
-      console.log('---------------------');
-      console.log('Your score: ' + score);
-      console.log('---------------------');
     }
   }
   nextRandomQuestion();
