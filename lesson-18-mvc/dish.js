@@ -21,7 +21,6 @@ document.querySelector('.dish-btn-add').addEventListener('click', function () {
   } while (!dishRecipe);
 
   dishStorage.addValue(dishName, dishRecipe);
-  dishStorage.store();
 });
 
 document.querySelector('.dish-btn-get-value').addEventListener('click', function () {
@@ -40,7 +39,6 @@ document.querySelector('.dish-btn-delete').addEventListener('click', function ()
   } else {
     alert('Remove error. Don\'t find this dish =(');
   }
-  dishStorage.store();
 });
 
 document.querySelector('.dish-btn-get-keys').addEventListener('click', function () {

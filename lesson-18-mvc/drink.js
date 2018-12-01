@@ -23,7 +23,6 @@ document.querySelector('.drink-btn-add').addEventListener('click', function () {
   } while (!drinkRecipe);
 
   drinkStorage.addValue(drinkName, [drinkAlcohol, drinkRecipe]);
-  drinkStorage.store();
 });
 
 document.querySelector('.drink-btn-get-value').addEventListener('click', function () {
@@ -42,7 +41,6 @@ document.querySelector('.drink-btn-delete').addEventListener('click', function (
   } else {
     alert('Remove error. Don\'t find this drink =(');
   }
-  drinkStorage.store();
 });
 
 document.querySelector('.drink-btn-get-keys').addEventListener('click', function () {

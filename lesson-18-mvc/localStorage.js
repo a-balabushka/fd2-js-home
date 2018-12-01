@@ -2,10 +2,12 @@
 
 function TLocalStorage(nameStorage) {
   var self = this;
-  var storage = {};
+  var name = nameStorage;
+  var storage = JSON.parse(localStorage.getItem(name)) || {};
 
   self.addValue = function (key, value) {
     storage[key] = value;
+    localStorage.setItem(name, JSON.stringify(storage));
   };
 
   self.getValue = function (key) {
@@ -15,6 +17,7 @@ function TLocalStorage(nameStorage) {
   self.deleteValue = function (key) {
     if (key in storage) {
       delete storage[key];
+      localStorage.setItem(name, JSON.stringify(storage));
       return true;
     }
     return false;
@@ -25,13 +28,9 @@ function TLocalStorage(nameStorage) {
   };
 
   self.reset = function () {
-    if (window.localStorage.getItem(nameStorage)) {
-      storage = JSON.parse(window.localStorage.getItem(nameStorage));
+    if (window.localStorage.getItem(name)) {
+      storage = JSON.parse(window.localStorage.getItem(name));
     }
     return storage;
-  };
-
-  self.store = function () {
-    window.localStorage.setItem(nameStorage, JSON.stringify(storage));
   };
 }
