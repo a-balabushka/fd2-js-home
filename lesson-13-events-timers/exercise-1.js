@@ -1,71 +1,81 @@
 'use strict';
 
-var clockBg = document.getElementById('clockBg'); // контейнер часов
-clockBg.style.cssText = 'width: 400px;' +
-  'height: 400px;' +
-  'background-color: grey;' +
-  'border-radius: 50%;' +
-  'border: 2px solid gold';
+var clockSize = 400; // размер часов
+var dotSize = 20; // размер центрального кружка
+var clockNumSize = 40; // размер цифр
 
-var delta = Math.PI / 6;
-var angle = 0;
-for (var i = 0; i < 12; i++) {
-  var numBg = document.createElement('div'); // номер часа в кружке
-  numBg.style.cssText = 'position: absolute;' +
-    'width: 40px;' +
-    'height: 40px;' +
-    'background-color: gold;' +
+(function createWatch() {
+  var clockBg = document.getElementById('clockBg'); // контейнер часов
+  clockBg.style.cssText =
+    'background-color: grey;' +
     'border-radius: 50%;' +
-    'text-align: center;' +
-    'font-size: 35px';
-  numBg.textContent = i + 1;
-  numBg.style.left = 190 + 170 * Math.cos(angle - Math.PI / 3) + 'px';
-  numBg.style.top = 190 + 170 * Math.sin(angle - Math.PI / 3) + 'px';
-  angle += delta;
-  clockBg.appendChild(numBg);
+    'border: 2px solid gold';
+  clockBg.style.width = clockBg.style.height = clockSize + 'px';
+  createHourNumber();
+  clockBg.appendChild(createHourNumber());
+  clockBg.appendChild(createArrow(150, 'arrowSeconds', 'red'));
+  clockBg.appendChild(createArrow(150, 'arrowMinutes', 'gold'));
+  clockBg.appendChild(createArrow(125, 'arrowHours', 'gold'));
+  clockBg.appendChild(createCenterDot());
+  clockBg.appendChild(createClockNum());
+})();
+
+function createHourNumber() {
+  var delta = Math.PI / 6;
+  var angle = 0;
+  var hourNum = document.createDocumentFragment();
+  for (var i = 0; i < 12; i++) {
+    var numBg = document.createElement('div');
+    numBg.style.cssText = 'position: absolute;' +
+      'background-color: gold;' +
+      'border-radius: 50%;' +
+      'text-align: center;' +
+      'font-size: 35px';
+    numBg.textContent = i + 1;
+    numBg.style.width = numBg.style.height = 2 * dotSize + 'px';
+    numBg.style.left = 190 + 170 * Math.cos(angle - Math.PI / 3) + 'px';
+    numBg.style.top = 190 + 170 * Math.sin(angle - Math.PI / 3) + 'px';
+    angle += delta;
+    hourNum.appendChild(numBg);
+  }
+  return hourNum;
 }
 
-var center = document.createElement('div'); // центральный черный кружок
-center.style.cssText = 'position: absolute;' +
-  'width: 20px;' +
-  'height: 20px;' +
-  'background-color: black;' +
-  'border-radius: 50%;' +
-  'top: 200px;' +
-  'left: 200px';
-clockBg.appendChild(center);
-
-var arrowHours = document.createElement('div'); // стрелка чаосв
-var arrowMinutes = document.createElement('div'); // стрелка минут
-var arrowSeconds = document.createElement('div'); // стрелка секунд
-
-arrowHours = clockBg.appendChild(arrowHours);
-arrowMinutes = clockBg.appendChild(arrowMinutes);
-arrowSeconds = clockBg.appendChild(arrowSeconds);
-
-var arrArrows = [arrowHours, arrowMinutes, arrowSeconds]; // массив стрелок
-for (var j = 0; j < arrArrows.length; j++) {
-  arrArrows[j].style.cssText = 'position: absolute;' +
-    'width: 150px;' +
-    'height: 10px;' +
+function createArrow(arrowWidth, arrowType, arrowColor) {
+  var arrow = document.createElement('div');
+  arrow.id = arrowType;
+  arrow.style.cssText = 'position: absolute;' +
     'background-color: gold;' +
     'transform-origin: 5px 5px;' +
     'left: 205px;' +
     'top: 205px';
+  arrow.style.width = arrowWidth + 'px';
+  arrow.style.height = (dotSize / 2) + 'px';
+  arrow.style.backgroundColor = arrowColor;
+  return arrow;
 }
 
-arrowHours.style.width = '125px';
-arrowSeconds.style.backgroundColor = 'red';
+function createCenterDot() {
+  var center = document.createElement('div');
+  center.style.cssText = 'position: absolute;' +
+    'background-color: black;' +
+    'border-radius: 50%';
+  center.style.top = center.style.left = (clockSize / 2) + 'px';
+  return center;
+}
 
-var clockNum = document.createElement('div'); // табло времени
-clockNum.style.cssText = 'position: absolute;' +
-  'width: 40px;' +
-  'font-size: 25px;' +
-  'color: gold;' +
-  'text-align: center;' +
-  'left: 170px;' +
-  'top: 120px';
-clockBg.appendChild(clockNum);
+function createClockNum() {
+  var clockNum = document.createElement('div');
+  clockNum.id = 'clockNum';
+  clockNum.style.cssText = 'position: absolute;' +
+    'font-size: 25px;' +
+    'color: gold;' +
+    'text-align: center;' +
+    'left: 170px;' +
+    'top: 120px';
+  clockNum.style.width = clockNumSize + 'px';
+  return clockNum;
+}
 
 setInterval(clockMovement, 1000);
 
