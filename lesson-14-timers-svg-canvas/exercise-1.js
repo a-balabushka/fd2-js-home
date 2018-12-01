@@ -12,6 +12,17 @@ setInterval(tickTimer, 1000);
 // UI
 
 function createWatch() {
+  svg.appendChild(createBase());
+  svg.appendChild(createClockFace());
+  svg.appendChild(createArrow('hours', 6, 'black', 160));
+  svg.appendChild(createArrow('minutes', 4, 'black', 140));
+  svg.appendChild(createArrow('seconds', 2, 'red', 120));
+  svg.appendChild(createDecorativeDot(dotSize));
+  createDigitalWatch();
+  return svg;
+}
+
+function createBase() {
   let base = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
   base.setAttribute('cx', baseRadius.toString());
   base.setAttribute('cy', baseRadius.toString());
@@ -19,14 +30,7 @@ function createWatch() {
   base.setAttribute('stroke', '#36A9E1');
   base.setAttribute('stroke-width', '10');
   base.setAttribute('fill', 'white');
-  svg.appendChild(base);
-  base.appendChild(createClockFace());
-  createDigitalWatch();
-  svg.appendChild(createArrow('hours', 6, 'black', 160));
-  svg.appendChild(createArrow('minutes', 4, 'black', 140));
-  svg.appendChild(createArrow('seconds', 2, 'red', 120));
-  svg.appendChild(createDecorativeDot(dotSize));
-  return svg;
+  return base;
 }
 
 function createClockFace() {
@@ -71,7 +75,6 @@ function createDigitalWatch() {
   textClock.setAttribute('font-size', '20');
   textClock.setAttribute('text-anchor', 'middle');
   svg.appendChild(textClock);
-  return textClock;
 }
 
 function createArrow(arrowType, arrowWidth, arrowColor, arrowHeight) {
